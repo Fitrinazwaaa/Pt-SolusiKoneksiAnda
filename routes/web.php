@@ -8,6 +8,7 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SettingKontakController;
 use App\Http\Controllers\SettingMedsosController;
 use App\Http\Controllers\SettingProfileController;
+use App\Http\Controllers\UserPageController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
@@ -47,6 +48,12 @@ Route::post('/setting-profile/update', [SettingProfileController::class, 'profil
 Route::get('/setting-kontak', [SettingKontakController::class, 'index'])->name('kontak');
 Route::post('/setting-kontak', [SettingKontakController::class, 'update'])->name('kontak.update');
 
-
 Route::get('/setting-medsos', [SettingMedsosController::class, 'index'])->name('medsos');
 Route::post('/setting-medsos', [SettingMedsosController::class, 'update'])->name('medsos.update');
+
+Route::get('/user-profile', [UserPageController::class, 'profile'])->name('user.profile');
+Route::get('/user-produk/{id}', [UserPageController::class, 'produk'])->name('user.produk');
+Route::get('/user-artikel', [UserPageController::class, 'artikel'])->name('user.artikel');
+Route::get('/user-artikel/{slug}', [UserPageController::class, 'show'])->name('article.show');
+Route::get('/user-galeri', [UserPageController::class, 'galeri'])->name('user.galeri');
+Route::get('/user-kontak', [UserPageController::class, 'kontak'])->name('user.kontak');

@@ -196,7 +196,8 @@
                         <ul class="nav flex-column">
                             <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-tag"></i> Tag</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('article') }}"><i class="bi bi-file-text"></i>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('article') }}"><i
+                                        class="bi bi-file-text"></i>
                                     Article</a></li>
                         </ul>
                     </div>
@@ -210,32 +211,33 @@
         <div class="nav-section">
             <div class="nav-section-title">Configuration</div>
             <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#settingMenu" role="button" aria-expanded="false" aria-controls="settingMenu">
-                  <i class="bi bi-gear-fill"></i> Setting
-                </a>
-                <div class="collapse" id="settingMenu">
-                  <ul class="nav flex-column ms-3 mt-2">
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ route('profile') }}">
-                        <i class="bi bi-person-circle"></i> Profile
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ route('kontak') }}">
-                        <i class="bi bi-telephone-fill"></i> Kontak
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ route('medsos') }}">
-                        <i class="bi bi-share-fill"></i> Media Sosial
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#settingMenu" role="button"
+                        aria-expanded="false" aria-controls="settingMenu">
+                        <i class="bi bi-gear-fill"></i> Setting
+                    </a>
+                    <div class="collapse" id="settingMenu">
+                        <ul class="nav flex-column ms-3 mt-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profile') }}">
+                                    <i class="bi bi-person-circle"></i> Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('kontak') }}">
+                                    <i class="bi bi-telephone-fill"></i> Kontak
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('medsos') }}">
+                                    <i class="bi bi-share-fill"></i> Media Sosial
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
-          </div>
+        </div>
 
         <a href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout-link">
@@ -278,114 +280,204 @@
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 10%;">Actions</th>
-                            <th>Module Name</th>
-                            <th>Module Description</th>
+                            <th style="width: 10%; text-align: center">Actions</th>
+                            <th style="text-align: center">Module Name</th>
+                            <th style="text-align: center">Module Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($modules as $index => $module)
+                        @forelse ($modules as $module)
                             <tr>
-                                <td>
-                                    <!-- Tombol Edit -->
-                                    <button class="btn btn-sm btn-outline-warning me-1" title="Edit"
-                                        data-bs-toggle="modal" data-bs-target="#editModulModal{{ $module->id }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-
-                                    <!-- Tombol Delete -->
-                                    <form action="{{ route('modules.destroy', $module->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-outline-danger me-1" title="Delete"
-                                            onclick="return confirm('Yakin ingin menghapus modul ini?')">
-                                            <i class="bi bi-trash"></i>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <!-- Tombol Edit -->
+                                        <button class="btn btn-sm btn-outline-warning" title="Edit"
+                                            data-bs-toggle="modal" data-bs-target="#editModulModal{{ $module->id }}">
+                                            <i class="bi bi-pencil"></i>
                                         </button>
-                                    </form>
-
-                                    <!-- Tombol Tambah Object -->
-                                    <button class="btn btn-sm btn-outline-primary" title="Tambah Object"
-                                        data-bs-toggle="modal" data-bs-target="#tambahObjectModal{{ $module->id }}">
-                                        <i class="bi bi-plus-circle"></i>
-                                    </button>
-
-                                </td>
-                                <td>{{ $module->name }}</td>
-                                <td>{{ $module->description }}</td>
-                            </tr>
-
-                            <!-- Modal Edit Modul -->
-                            <div class="modal fade" id="editModulModal{{ $module->id }}" tabindex="-1"
-                                aria-labelledby="editModulModalLabel{{ $module->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content shadow">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title fw-semibold"
-                                                id="editModulModalLabel{{ $module->id }}">Edit Modul</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('modules.update', $module->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="row">
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="moduleImage{{ $module->id }}"
-                                                            class="form-label">Module Image</label>
-
-                                                        @if ($module->image)
-                                                            <div class="mb-2">
-                                                                <img src="{{ asset('storage/' . $module->image) }}"
-                                                                    alt="Module Image" width="100"
-                                                                    class="rounded shadow-sm">
-                                                            </div>
-                                                        @endif
-
-                                                        <input type="file" class="form-control"
-                                                            id="moduleImage{{ $module->id }}" name="image">
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="indexOrder{{ $module->id }}"
-                                                            class="form-label">Index Order</label>
-                                                        <input type="number" class="form-control"
-                                                            id="indexOrder{{ $module->id }}" name="index_order"
-                                                            value="{{ $module->index_order }}">
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="moduleName{{ $module->id }}"
-                                                        class="form-label">Module Name</label>
-                                                    <input type="text" class="form-control"
-                                                        id="moduleName{{ $module->id }}" name="name"
-                                                        value="{{ $module->name }}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="moduleDescription{{ $module->id }}"
-                                                        class="form-label">Module Description</label>
-                                                    <textarea class="form-control" id="moduleDescription{{ $module->id }}" name="description" rows="3">{{ $module->description }}</textarea>
-                                                </div>
-                                                <div class="text-end">
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-modern">Update</button>
-                                                </div>
-                                            </form>
-                                        </div>
+            
+                                        <!-- Tombol Delete -->
+                                        <form action="{{ route('modules.destroy', $module->id) }}" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus modul ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+            
+                                        <!-- Tombol Tambah Object -->
+                                        <button class="btn btn-sm btn-outline-primary" title="Tambah Object"
+                                            data-bs-toggle="modal" data-bs-target="#tambahObjectModal{{ $module->id }}">
+                                            <i class="bi bi-plus-circle"></i>
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-
+                                </td>
+                                <td class="text-center">{{ $module->name }}</td>
+                                <td class="text-center">{{ $module->description }}</td>
+                            </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted">Belum ada modul.</td>
+                                <td colspan="3" class="text-center text-muted">Belum ada modul.</td>
                             </tr>
                         @endforelse
                     </tbody>
-
                 </table>
             </div>
+            
+            <!-- Modal Edit & Tambah Object (dipisah dari <table>) -->
+            @foreach ($modules as $module)
+                {{-- Modal Edit --}}
+                <div class="modal fade" id="editModulModal{{ $module->id }}" tabindex="-1"
+                    aria-labelledby="editModulModalLabel{{ $module->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content shadow">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-semibold" id="editModulModalLabel{{ $module->id }}">Edit Modul</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('modules.update', $module->id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Gambar Modul</label>
+                                            @if ($module->image)
+                                                <img src="{{ asset('storage/' . $module->image) }}" width="100" class="mb-2 rounded shadow-sm" />
+                                            @endif
+                                            <input type="file" name="image" class="form-control">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Index Order</label>
+                                            <input type="number" name="index_order" value="{{ $module->index_order }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nama Modul</label>
+                                        <input type="text" name="name" value="{{ $module->name }}" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Deskripsi</label>
+                                        <textarea name="description" rows="3" class="form-control">{{ $module->description }}</textarea>
+                                    </div>
+                                    <div class="text-end">
+                                        <button class="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                {{-- Modal Tambah Object --}}
+                <div class="modal fade" id="tambahObjectModal{{ $module->id }}" tabindex="-1"
+                    aria-labelledby="tambahObjectModalLabel{{ $module->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content shadow">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tambahObjectModalLabel{{ $module->id }}">Tambah Object untuk {{ $module->name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('module-objects.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="module_id" value="{{ $module->id }}">
+                                    @for ($i = 0; $i < $module->index_order; $i++)
+                                        <div class="border rounded p-3 mb-4">
+                                            <h6>Object {{ $i + 1 }}</h6>
+                                            <div class="row">
+                                                <div class="mb-3 col-md-4">
+                                                    <label class="form-label">Gambar</label>
+                                                    <input type="file" name="objects[{{ $i }}][image]" class="form-control">
+                                                </div>
+                                                <div class="mb-3 col-md-4">
+                                                    <label class="form-label">Nama</label>
+                                                    <input type="text" name="objects[{{ $i }}][name]" class="form-control">
+                                                </div>
+                                                <div class="mb-3 col-md-4">
+                                                    <label class="form-label">Icon</label>
+                                                    <input type="text" name="objects[{{ $i }}][icon]" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="mb-3 col-md-6">
+                                                    <label class="form-label">Deskripsi</label>
+                                                    <textarea name="objects[{{ $i }}][description]" class="form-control" rows="2"></textarea>
+                                                </div>
+                                                <div class="mb-3 col-md-3">
+                                                    <label class="form-label">Index</label>
+                                                    <input type="number" name="objects[{{ $i }}][index_order]" class="form-control" value="{{ $i + 1 }}">
+                                                </div>
+                                                <div class="mb-3 col-md-3">
+                                                    <label class="form-label">Parent Module</label>
+                                                    <select name="objects[{{ $i }}][parent_module]" class="form-select">
+                                                        <option value="">Pilih...</option>
+                                                        @foreach ($modules as $m)
+                                                            <option value="{{ $m->id }}">{{ $m->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" name="objects[{{ $i }}][is_active]" class="form-check-input" value="1" checked>
+                                                <label class="form-check-label">Aktif</label>
+                                            </div>
+                                        </div>
+                                    @endfor
+                                    <div class="text-end">
+                                        <button class="btn btn-primary">Simpan Object</button>
+                                    </div>
+                                </form>
+            
+                                <!-- Tabel Object -->
+                                <hr class="my-4">
+                                <h6>Daftar Object</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover mt-3">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Actions</th>
+                                                <th>Nama</th>
+                                                <th>Deskripsi</th>
+                                                <th>Index</th>
+                                                <th>Parent Module</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($module->objects as $object)
+                                                <tr>
+                                                    <td>
+                                                        <form action="{{ route('module-objects.destroy', $object->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus object ini?')">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                    <td>{{ $object->object_name }}</td>
+                                                    <td>{{ $object->object_description }}</td>
+                                                    <td>{{ $object->index_order }}</td>
+                                                    <td>{{ $object->parentModule->name ?? '-' }}</td>
+                                                    <td>
+                                                        <span class="badge {{ $object->is_active ? 'bg-success' : 'bg-secondary' }}">
+                                                            {{ $object->is_active ? 'Aktif' : 'Nonaktif' }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            
 
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
@@ -434,127 +526,6 @@
                                 <button type="submit" class="btn btn-primary btn-modern">Simpan</button>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Tambah Object -->
-        <div class="modal fade" id="tambahObjectModal{{ $module->id }}" tabindex="-1"
-            aria-labelledby="tambahObjectModalLabel{{ $module->id }}" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content shadow">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahObjectModalLabel{{ $module->id }}">Tambah Object untuk
-                            {{ $module->name }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Tutup"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('module-objects.store') }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="module_id" value="{{ $module->id }}">
-
-                            @for ($i = 0; $i < $module->index_order; $i++)
-                                <div class="border rounded p-3 mb-4">
-                                    <h6 class="mb-3">Object {{ $i + 1 }}</h6>
-                                    <div class="row">
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">Object Image</label>
-                                            <input type="file" name="objects[{{ $i }}][image]"
-                                                class="form-control">
-                                        </div>
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">Object Name</label>
-                                            <input type="text" name="objects[{{ $i }}][name]"
-                                                class="form-control">
-                                        </div>
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">Icon CSS</label>
-                                            <input type="text" name="objects[{{ $i }}][icon]"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">Object Description</label>
-                                            <textarea name="objects[{{ $i }}][description]" class="form-control" rows="2"></textarea>
-                                        </div>
-                                        <div class="mb-3 col-md-3">
-                                            <label class="form-label">Index Order</label>
-                                            <input type="number" name="objects[{{ $i }}][index_order]"
-                                                class="form-control" value="{{ $i + 1 }}">
-                                        </div>
-                                        <div class="mb-3 col-md-3">
-                                            <label class="form-label">Parent Module</label>
-                                            <select name="objects[{{ $i }}][parent_module]"
-                                                class="form-select">
-                                                <option value="">Pilih...</option>
-                                                @foreach ($modules as $m)
-                                                    <option value="{{ $m->id }}">{{ $m->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox"
-                                            name="objects[{{ $i }}][is_active]" value="1" checked>
-                                        <label class="form-check-label">Aktif</label>
-                                    </div>
-                                </div>
-                            @endfor
-
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-primary">Simpan Object</button>
-                            </div>
-                        </form>
-
-                        <!-- Tabel Object -->
-                        <hr class="my-4" />
-                        <h6>Daftar Object</h6>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover mt-3">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Actions</th>
-                                        <th>Object Name</th>
-                                        <th>Object Description</th>
-                                        <th>Index</th>
-                                        <th>Parent Module</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  @foreach ($module->objects as $object)
-                                      <tr>
-                                          <td>
-                                              <form action="{{ route('module-objects.destroy', $object->id) }}" method="POST">
-                                                  @csrf
-                                                  @method('DELETE')
-                                                  <button class="btn btn-sm btn-danger btn-icon"
-                                                      onclick="return confirm('Hapus object ini?')">
-                                                      <i class="bi bi-trash"></i>
-                                                  </button>
-                                              </form>
-                                          </td>
-                                          <td>{{ $object->object_name }}</td>
-                                          <td>{{ $object->object_description }}</td>
-                                          <td>{{ $object->index_order }}</td>
-                                          <td>{{ $object->parentModule->name ?? '-' }}</td>
-                                          <td>
-                                              @if ($object->is_active)
-                                                  <span class="badge bg-success">Aktif</span>
-                                              @else
-                                                  <span class="badge bg-secondary">Nonaktif</span>
-                                              @endif
-                                          </td>
-                                      </tr>
-                                  @endforeach
-                              </tbody>
-                              
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
