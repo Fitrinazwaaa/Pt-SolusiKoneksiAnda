@@ -5,6 +5,9 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\moduleController;
 use App\Http\Controllers\ModuleObjectController;
 use App\Http\Controllers\SesiController;
+use App\Http\Controllers\SettingKontakController;
+use App\Http\Controllers\SettingMedsosController;
+use App\Http\Controllers\SettingProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
@@ -37,3 +40,13 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
 Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+
+Route::get('/setting-profile', [SettingProfileController::class, 'profile'])->name('profile');
+Route::post('/setting-profile/update', [SettingProfileController::class, 'profileUpdate'])->name('setting.update');
+
+Route::get('/setting-kontak', [SettingKontakController::class, 'index'])->name('kontak');
+Route::post('/setting-kontak', [SettingKontakController::class, 'update'])->name('kontak.update');
+
+
+Route::get('/setting-medsos', [SettingMedsosController::class, 'index'])->name('medsos');
+Route::post('/setting-medsos', [SettingMedsosController::class, 'update'])->name('medsos.update');

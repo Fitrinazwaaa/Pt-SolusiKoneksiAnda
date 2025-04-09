@@ -189,6 +189,7 @@
       </li>
     </ul>
   </div>
+  
 
   <a href="{{ route('logout') }}"
      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -203,7 +204,7 @@
 <div class="main-content">
   <!-- Navbar Dashboard -->
   <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
-    <span class="fw-semibold fs-5 text-dark">Dashboard Admin</span>
+    <span class="fw-semibold fs-5 text-dark">Setting Media Sosial</span>
     <div class="d-flex align-items-center">
       <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
       <span class="fw-semibold text-dark">Admin</span>
@@ -211,6 +212,40 @@
   </nav>
 
 {{-- CONTENT DISINI --}}
+<div class="card shadow p-4 bg-white rounded">
+  <form action="{{ route('medsos.update') }}" method="POST">
+    @csrf
+
+    <div class="mb-3">
+      <label class="form-label">Facebook</label>
+      <input type="url" name="facebook" class="form-control" value="{{ old('facebook', $setting->facebook ?? '') }}">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">YouTube</label>
+      <input type="url" name="youtube" class="form-control" value="{{ old('youtube', $setting->youtube ?? '') }}">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Instagram</label>
+      <input type="url" name="instagram" class="form-control" value="{{ old('instagram', $setting->instagram ?? '') }}">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">X (Twitter)</label>
+      <input type="url" name="x" class="form-control" value="{{ old('x', $setting->x ?? '') }}">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">LinkedIn</label>
+      <input type="url" name="linkedin" class="form-control" value="{{ old('linkedin', $setting->linkedin ?? '') }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="bi bi-save me-1"></i> Simpan Media Sosial
+    </button>
+  </form>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

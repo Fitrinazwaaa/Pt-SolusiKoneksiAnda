@@ -167,7 +167,7 @@
             <div class="nav-section-title">Dashboard</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-house"></i> Dashboard</a>
+                    <a class="nav-link" href="{{ route('dashboard') }}"><i class="bi bi-house"></i> Dashboard</a>
                 </li>
             </ul>
         </div>
@@ -210,11 +210,32 @@
         <div class="nav-section">
             <div class="nav-section-title">Configuration</div>
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-gear"></i> Setting</a>
-                </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#settingMenu" role="button" aria-expanded="false" aria-controls="settingMenu">
+                  <i class="bi bi-gear-fill"></i> Setting
+                </a>
+                <div class="collapse" id="settingMenu">
+                  <ul class="nav flex-column ms-3 mt-2">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('profile') }}">
+                        <i class="bi bi-person-circle"></i> Profile
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('kontak') }}">
+                        <i class="bi bi-telephone-fill"></i> Kontak
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('medsos') }}">
+                        <i class="bi bi-share-fill"></i> Media Sosial
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
             </ul>
-        </div>
+          </div>
 
         <a href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout-link">
@@ -229,7 +250,7 @@
     <div class="main-content p-4">
         <!-- Navbar -->
         <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
-            <span class="fw-semibold fs-5 text-dark">Dashboard Admin</span>
+            <span class="fw-semibold fs-5 text-dark">Module List</span>
             <div class="d-flex align-items-center">
                 <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
                 <span class="fw-semibold text-dark">Admin</span>

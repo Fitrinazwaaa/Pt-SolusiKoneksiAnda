@@ -189,6 +189,7 @@
       </li>
     </ul>
   </div>
+  
 
   <a href="{{ route('logout') }}"
      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -203,7 +204,7 @@
 <div class="main-content">
   <!-- Navbar Dashboard -->
   <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
-    <span class="fw-semibold fs-5 text-dark">Dashboard Admin</span>
+    <span class="fw-semibold fs-5 text-dark">Setting Profile Perusahaan</span>
     <div class="d-flex align-items-center">
       <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
       <span class="fw-semibold text-dark">Admin</span>
@@ -211,6 +212,33 @@
   </nav>
 
 {{-- CONTENT DISINI --}}
+<div class="card shadow p-4 bg-white rounded">
+  <form action="{{ route('setting.update') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="mb-3">
+      <label class="form-label">Nama Website</label>
+      <input type="text" name="nama_website" class="form-control" value="{{ old('nama_website', $setting->nama_website ?? '') }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Deskripsi Website</label>
+      <textarea name="deskripsi" class="form-control" rows="4">{{ old('deskripsi', $setting->deskripsi ?? '') }}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Logo Website</label><br>
+      @if (!empty($setting->logo))
+        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="mb-2" style="height: 80px;">
+      @endif
+      <input type="file" name="logo" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="bi bi-save me-1"></i> Simpan Pengaturan
+    </button>
+  </form>
+</div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

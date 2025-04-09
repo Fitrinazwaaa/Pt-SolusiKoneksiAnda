@@ -189,6 +189,7 @@
       </li>
     </ul>
   </div>
+  
 
   <a href="{{ route('logout') }}"
      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -203,7 +204,7 @@
 <div class="main-content">
   <!-- Navbar Dashboard -->
   <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
-    <span class="fw-semibold fs-5 text-dark">Dashboard Admin</span>
+    <span class="fw-semibold fs-5 text-dark">Setting Contact</span>
     <div class="d-flex align-items-center">
       <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
       <span class="fw-semibold text-dark">Admin</span>
@@ -211,6 +212,58 @@
   </nav>
 
 {{-- CONTENT DISINI --}}
+
+  @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+  @endif
+
+  <div class="card shadow p-4 bg-white rounded">
+    <form action="{{ route('kontak.update') }}" method="POST">
+      @csrf
+
+      {{-- Email --}}
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" 
+               value="{{ old('email', $kontak->email ?? '') }}" placeholder="example@mail.com">
+      </div>
+
+      {{-- Phone --}}
+      <div class="mb-3">
+        <label class="form-label">Nomor Telepon</label>
+        <input type="text" name="phone" class="form-control" 
+               value="{{ old('phone', $kontak->phone ?? '') }}" placeholder="+62xxxxxxxxxxx">
+      </div>
+
+      {{-- Alamat --}}
+      <div class="mb-3">
+        <label class="form-label">Alamat</label>
+        <textarea name="alamat" class="form-control" rows="3" placeholder="Masukkan alamat kantor">{{ old('alamat', $kontak->alamat ?? '') }}</textarea>
+      </div>
+
+      {{-- Maps --}}
+      <div class="mb-3">
+        <label class="form-label">Embed Google Maps</label>
+        <textarea name="maps" class="form-control" rows="3" placeholder="<iframe>...">{!! old('maps', $kontak->maps ?? '') !!}</textarea>
+        <small class="text-muted">Masukkan kode embed dari Google Maps.</small>
+      </div>
+
+      {{-- Tombol Simpan --}}
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-save me-1"></i> Simpan Kontak
+      </button>
+    </form>
+  </div>
+
+  {{-- Preview Maps jika ada --}}
+  @if (!empty($kontak->maps))
+    <div class="card mt-4 p-3 shadow-sm">
+      <h6>Preview Lokasi:</h6>
+      <div class="ratio ratio-16x9">
+        {!! $kontak->maps !!}
+      </div>
+    </div>
+  @endif
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
