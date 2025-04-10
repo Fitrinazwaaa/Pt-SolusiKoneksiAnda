@@ -133,15 +133,9 @@
     <div class="nav-section-title">Master</div>
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#akunMenu" role="button">
+        <a class="nav-link" href="{{ route('akun.index') }}">
           <i class="bi bi-people"></i> Akun
         </a>
-        <div class="collapse" id="akunMenu">
-          <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person"></i> User</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-badge"></i> Admin</a></li>
-          </ul>
-        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#articleMenu" role="button">
@@ -171,7 +165,7 @@
           <ul class="nav flex-column ms-3 mt-2">
             <li class="nav-item">
               <a class="nav-link" href="{{ route('profile') }}">
-                <i class="bi bi-person-circle"></i> Profile
+                <i class="bi bi-person-circle"></i> Profile Perusahaan
               </a>
             </li>
             <li class="nav-item">

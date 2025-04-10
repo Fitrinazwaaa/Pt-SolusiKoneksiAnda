@@ -176,17 +176,10 @@
             <div class="nav-section-title">Master</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#akunMenu" role="button">
+                    <a class="nav-link" href="{{ route('akun.index') }}">
                         <i class="bi bi-people"></i> Akun
                     </a>
-                    <div class="collapse" id="akunMenu">
-                        <ul class="nav flex-column">
-                            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person"></i>
-                                    User</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person-badge"></i>
-                                    Admin</a></li>
-                        </ul>
-                    </div>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#articleMenu" role="button">
@@ -220,7 +213,7 @@
                         <ul class="nav flex-column ms-3 mt-2">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile') }}">
-                                    <i class="bi bi-person-circle"></i> Profile
+                                    <i class="bi bi-person-circle"></i> Profile Perusahaan
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -271,13 +264,13 @@
                     <i class="bi bi-plus-circle me-1"></i> Tambah Modul
                 </button>
                 <div class="input-group shadow-sm" style="max-width: 300px;">
-                    <input type="text" class="form-control" placeholder="Cari nama modul..." id="searchInput">
+                    <input type="text" class="form-control" placeholder="Cari nama modul/deskripsi..." id="searchInput">
                     <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
                 </div>
             </div>
 
             <div class="table-responsive mb-4">
-                <table class="table table-hover align-middle">
+                <table class="table table-hover align-middle" id="moduleTable">
                     <thead class="table-light">
                         <tr>
                             <th style="width: 10%; text-align: center">Actions</th>
@@ -478,8 +471,7 @@
                 </div>
             @endforeach
             
-
-            <nav aria-label="Page navigation">
+            {{-- <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
                     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                     <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -487,8 +479,33 @@
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
-            </nav>
+            </nav> --}}
+
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById('searchInput');
+                const table = document.getElementById('moduleTable');
+                const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        
+                searchInput.addEventListener('keyup', function () {
+                    const query = this.value.toLowerCase();
+        
+                    Array.from(rows).forEach(row => {
+                        const moduleName = row.cells[1]?.textContent.toLowerCase() || '';
+                        const moduleDesc = row.cells[2]?.textContent.toLowerCase() || '';
+        
+                        if (moduleName.includes(query) || moduleDesc.includes(query)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
+        
+    
 
         <!-- Modal Tambah Modul -->
         <div class="modal fade" id="tambahModulModal" tabindex="-1" aria-labelledby="tambahModulModalLabel"

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Module;
+use App\Models\SettingKontak;
+use App\Models\SettingMedsos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,12 +37,19 @@ class UserPageController extends Controller
     return view('user.artikel-detail', compact('article'));
 }
 
-    function galeri()
-    {
-        return view('user.galeri');
-    }
+public function galeri()
+{
+    $module = \App\Models\Module::with('objects')
+                ->where('name', 'Galeri Kegiatan')
+                ->first();
+
+    return view('user.galeri', compact('module'));
+}
+
     function kontak()
     {
-        return view('user.kontak');
+        $kontak = SettingKontak::first();
+        $medsos = SettingMedsos::first();
+        return view('user.kontak', compact('kontak', 'medsos'));
     }
 }

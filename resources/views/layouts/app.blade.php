@@ -1,8 +1,9 @@
 <?php
-    use App\Models\Module;
-    $modules = Module::orderBy('index_order')->get();
+use App\Models\Module;
+$modules = Module::orderBy('index_order')->get();
 ?>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,19 +44,25 @@
         .navbar-top .left {
             display: flex;
             align-items: center;
-            gap: 12px;
+        }
+
+        .navbar-top .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
         }
 
         .navbar-top .logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
             object-fit: cover;
         }
 
         .navbar-top .company-name {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 600;
             color: #1e293b;
         }
 
@@ -63,7 +70,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            font-size: 15px;
+            font-size: 14px;
             color: #334155;
         }
 
@@ -78,15 +85,13 @@
         }
 
         .navbar-top .logout-btn:hover {
-            background-color: #2563eb;
+            background-color: #790909;
         }
 
-        /* Navbar Bawah */
         .navbar-bottom {
             background-color: #1e293b;
             position: fixed;
-            top: 65px;
-            /* sesuaikan dengan tinggi navbar-top */
+            top: 54px;
             left: 0;
             right: 0;
             z-index: 998;
@@ -175,46 +180,40 @@
         }
     </style>
 </head>
+
 <body>
-     <!-- Navbar Atas -->
-     <div class="navbar-top">
+    <!-- Navbar Atas -->
+    <div class="navbar-top">
         <div class="left">
-            <img src="{{ asset('logo2.png') }}" alt="Logo" class="logo">
-            <div class="company-name">PT. Solusi Koneksi Anda</div>
+            <a href="{{ route('login') }}" class="brand-link">
+                <img src="{{ asset('logo2.png') }}" alt="Logo" class="logo">
+                <div class="company-name">PT. Solusi Koneksi Anda</div>
+            </a>
         </div>
         <div class="right">
             <span>📞 0812-3456-7890</span>
-            {{-- <button class="logout-btn">Logout</button> --}}
-            <a href="{{ route('logout') }}" class="logout-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-            </form>
         </div>
     </div>
 
     <!-- Navbar Bawah -->
     <nav class="navbar-bottom">
         <ul>
-            <li><a href="{{ route('dashboard') }}">Home</a></li>
+            <li><a href="{{ route('awal') }}">Home</a></li>
             <li><a href="{{ route('user.profile') }}">Profil Perusahaan</a></li>
             <li>
                 <a href="#">Produk ▾</a>
                 <div class="dropdown-content">
-                    @foreach($modules as $module)
+                    @foreach ($modules as $module)
                         <a href="{{ route('user.produk', $module->id) }}">
                             {{ $module->name }}
                         </a>
                     @endforeach
                 </div>
             </li>
-                  
+
             <li><a href="{{ route('user.artikel') }}">Artikel</a></li>
             <li>
-                <a href="{{ route('user.galeri') }}">Galeri Kegiatan ▾</a>
-                <div class="dropdown-content">
-                    <a href="#">Foto</a>
-                    <a href="#">Video</a>
-                </div>
+                <a href="{{ route('user.galeri') }}">Galeri Kegiatan</a>
             </li>
             <li><a href="{{ route('user.kontak') }}">Kontak Kami</a></li>
         </ul>
@@ -223,11 +222,12 @@
         @yield('content') {{-- Tempat isi halaman --}}
     </div>
 
-        {{-- footer --}}
-        <footer class="modern-footer">
-            <div class="footer-bottom">
-                <p>&copy; 2025 PT. Solusi Koneksi Anda. All rights reserved.</p>
-            </div>
-        </footer>
+    {{-- footer --}}
+    <footer class="modern-footer">
+        <div class="footer-bottom">
+            <p>&copy; 2025 PT. Solusi Koneksi Anda. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
+
 </html>

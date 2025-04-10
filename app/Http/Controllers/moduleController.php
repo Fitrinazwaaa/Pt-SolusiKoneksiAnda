@@ -9,11 +9,11 @@ class ModuleController extends Controller
 {
     public function index()
     {
-        $modules = Module::with(['objects.parentModule'])->orderBy('index_order')->paginate(10);
-        return view('operator.module', compact('modules'));
+        $modules = Module::with(['objects.parentModule'])->orderBy('index_order')->get(); // Tidak dipaginasi
+        $produk = Module::orderBy('id')->paginate(2); // Ini yang dipaginasi
+        return view('operator.module', compact('modules', 'produk'));
     }
     
-
     public function store(Request $request)
     {
         $request->validate([

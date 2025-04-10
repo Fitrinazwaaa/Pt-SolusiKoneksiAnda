@@ -22,6 +22,20 @@
       width: 100%;
       max-width: 400px;
       text-align: center;
+      position: relative;
+    }
+
+    .btn-back {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      text-decoration: none;
+      color: #4a90e2;
+      font-size: 14px;
+    }
+
+    .btn-back:hover {
+      text-decoration: underline;
     }
 
     .login-container img {
@@ -95,8 +109,10 @@
   </style>
 </head>
 <body>
+  <a href="{{ url('/') }}" class="btn-back" style="margin: 30px; font-weight: 700"> ← Kembali</a>
 
 <div class="login-container">
+
   <img src="{{ asset('logo2.png') }}" alt="Logo" style="width: 120px; margin-left: -10px; margin-bottom: 20px;">
   <h2 style="margin-top: -20px">Login</h2>
 
@@ -121,9 +137,9 @@
     <button class="btn-login" type="submit">Masuk</button>
   </form>
 
-  <div class="register-link">
+  {{-- <div class="register-link">
     Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a>
-  </div>
+  </div> --}}
 </div>
 
 </body>

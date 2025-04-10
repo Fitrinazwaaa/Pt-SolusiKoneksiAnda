@@ -1,6 +1,6 @@
 <?php
-    use App\Models\Module;
-    $modules = Module::orderBy('index_order')->get();
+use App\Models\Module;
+$modules = Module::orderBy('index_order')->get();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,9 @@
     <title>Navbar Modern</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-SOME_HASH_HERE" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -46,19 +49,25 @@
         .navbar-top .left {
             display: flex;
             align-items: center;
-            gap: 12px;
+        }
+
+        .navbar-top .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
         }
 
         .navbar-top .logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
             object-fit: cover;
         }
 
         .navbar-top .company-name {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 600;
             color: #1e293b;
         }
 
@@ -66,7 +75,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            font-size: 15px;
+            font-size: 14px;
             color: #334155;
         }
 
@@ -84,12 +93,10 @@
             background-color: #790909;
         }
 
-        /* Navbar Bawah */
         .navbar-bottom {
             background-color: #1e293b;
             position: fixed;
-            top: 65px;
-            /* sesuaikan dengan tinggi navbar-top */
+            top: 54px;
             left: 0;
             right: 0;
             z-index: 998;
@@ -599,15 +606,9 @@
             margin: 0 auto;
             display: flex;
             flex-wrap: nowrap;
-            /* jangan wrap di desktop */
             justify-content: space-between;
             align-items: flex-start;
-            gap: 40px;
-        }
-
-        .footer-middle,
-        .footer-right {
-            text-align: right;
+            gap: 48px;
         }
 
         .footer-col {
@@ -615,16 +616,16 @@
             min-width: 260px;
         }
 
-        /* Logo dan Nama */
-        .logo-group {
+        .footer-left .logo-group {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .footer-logo {
-            width: 48px;
+            width: 52px;
+            height: auto;
         }
 
         .company-name {
@@ -633,29 +634,35 @@
             color: #ffffff;
         }
 
-        /* Sosial Media */
+        .social-links {
+            margin-top: 20px;
+        }
+
         .social-links a {
-            font-size: 18px;
+            font-size: 20px;
             color: #94a3b8;
-            margin-right: 10px;
-            transition: color 0.3s;
+            margin-left: 34px;
+            transition: all 0.3s ease-in-out;
         }
 
         .social-links a:hover {
-            color: #ffffff;
+            color: #3b82f6;
+            transform: scale(1.1);
         }
 
-        /* Tengah */
-        .footer-middle h4 {
+        .footer-middle h4,
+        .footer-right h4 {
             font-size: 18px;
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .footer-middle p {
+        .footer-middle p,
+        .footer-right p {
             font-size: 15px;
-            margin-bottom: 16px;
             color: #94a3b8;
+            margin-bottom: 12px;
+            line-height: 1.6;
         }
 
         .footer-btn {
@@ -666,24 +673,12 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
         }
 
         .footer-btn:hover {
             background-color: #2563eb;
-        }
-
-        /* Support */
-        .footer-right h4 {
-            font-size: 18px;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .footer-right p {
-            font-size: 15px;
-            color: #94a3b8;
-            margin-bottom: 6px;
+            transform: translateY(-2px);
         }
 
         .support-link {
@@ -696,21 +691,21 @@
             text-decoration: underline;
         }
 
-        /* Footer Bottom */
         .footer-bottom {
             border-top: 1px solid #1e293b;
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 48px;
+            padding-top: 24px;
             text-align: center;
             font-size: 14px;
             color: #64748b;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
             .footer-wrapper {
-                flex-direction: column;
-                align-items: center;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 32px;
                 text-align: center;
             }
 
@@ -719,12 +714,25 @@
                 text-align: center;
             }
 
-            .footer-col {
-                text-align: center;
-            }
-
             .logo-group {
                 justify-content: center;
+            }
+
+            .social-links {
+                justify-content: center;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .footer-col {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-btn {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -734,42 +742,35 @@
     <!-- Navbar Atas -->
     <div class="navbar-top">
         <div class="left">
-            <img src="{{ asset('logo2.png') }}" alt="Logo" class="logo">
-            <div class="company-name">PT. Solusi Koneksi Anda</div>
+            <a href="{{ route('login') }}" class="brand-link">
+                <img src="{{ asset('logo2.png') }}" alt="Logo" class="logo">
+                <div class="company-name">PT. Solusi Koneksi Anda</div>
+            </a>
         </div>
         <div class="right">
             <span>📞 0812-3456-7890</span>
-            {{-- <button class="logout-btn">Logout</button> --}}
-            <a href="{{ route('logout') }}" class="logout-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-            </form>
         </div>
     </div>
 
     <!-- Navbar Bawah -->
     <nav class="navbar-bottom">
         <ul>
-            <li><a href="{{ route('dashboard') }}">Home</a></li>
+            <li><a href="{{ route('awal') }}">Home</a></li>
             <li><a href="{{ route('user.profile') }}">Profil Perusahaan</a></li>
             <li>
                 <a href="#">Produk ▾</a>
                 <div class="dropdown-content">
-                    @foreach($modules as $module)
+                    @foreach ($modules as $module)
                         <a href="{{ route('user.produk', $module->id) }}">
                             {{ $module->name }}
                         </a>
                     @endforeach
                 </div>
             </li>
-                  
+
             <li><a href="{{ route('user.artikel') }}">Artikel</a></li>
             <li>
-                <a href="{{ route('user.galeri') }}">Galeri Kegiatan ▾</a>
-                <div class="dropdown-content">
-                    <a href="#">Foto</a>
-                    <a href="#">Video</a>
-                </div>
+                <a href="{{ route('user.galeri') }}">Galeri Kegiatan</a>
             </li>
             <li><a href="{{ route('user.kontak') }}">Kontak Kami</a></li>
         </ul>
@@ -853,35 +854,62 @@
         </div>
     </section>
 
+    {{-- Foooter --}}
     <footer class="modern-footer">
         <div class="footer-wrapper">
             <!-- Kiri: Logo & Sosial Media -->
-            <div class="footer-col footer-left">
-                <div class="logo-group">
-                    <img src="{{ asset('logo2.png') }}" alt="Logo" class="footer-logo">
-                    <span class="company-name">PT. Solusi Koneksi Anda</span>
+            <div class="footer-col">
+                <div class="logo-group flex items-center space-x-3 mb-4">
+                    <img src="{{ asset('logo2.png') }}" alt="Logo" class="footer-logo w-12 h-12 object-contain">
+                    <span class="company-name text-xl font-semibold">PT. Solusi Koneksi Anda</span>
                 </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                <div class="social-links flex space-x-4 text-xl">
+                    @if ($medsos)
+                        @if ($medsos->facebook)
+                            <a href="{{ $medsos->facebook }}" target="_blank" aria-label="Facebook"><i
+                                    class="fab fa-facebook-f"></i></a>
+                        @endif
+                        @if ($medsos->instagram)
+                            <a href="{{ $medsos->instagram }}" target="_blank" aria-label="Instagram"><i
+                                    class="fab fa-instagram"></i></a>
+                        @endif
+                        @if ($medsos->youtube)
+                            <a href="{{ $medsos->youtube }}" target="_blank" aria-label="YouTube"><i
+                                    class="fab fa-youtube"></i></a>
+                        @endif
+                        @if ($medsos->linkedin)
+                            <a href="{{ $medsos->linkedin }}" target="_blank" aria-label="LinkedIn"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        @endif
+                        @if ($medsos->x)
+                            <a href="{{ $medsos->x }}" target="_blank" aria-label="Twitter / X"><i
+                                    class="fab fa-x-twitter"></i></a>
+                        @endif
+                    @endif
                 </div>
             </div>
 
             <!-- Tengah: Alamat dan Tombol -->
             <div class="footer-col footer-middle">
                 <h4>Alamat</h4>
-                <p>Jl. Teknologi No.123<br>Kota Inovasi, Jawa Barat 40234</p>
+                @if ($kontak)
+                    <p style="line-height: 1.2;" class="text-sm">{!! nl2br(e($kontak->alamat)) !!}</p>
+                @else
+                    <p>Alamat belum tersedia.</p>
+                @endif
                 <a href="#tentang-kami" class="footer-btn">Tentang Kami</a>
             </div>
 
             <!-- Kanan: Support -->
             <div class="footer-col footer-right">
                 <h4>Support</h4>
-                <p>Butuh bantuan atau pertanyaan?</p>
-                <a href="#" class="support-link">Hubungi Kami</a>
+                @if ($kontak)
+                    <p style="margin-bottom: -2px;">Email: <a href="mailto:{{ $kontak->email }}"
+                            class="support-link">{{ $kontak->email }}</a></p>
+                    <p>Telepon: <a href="tel:{{ $kontak->phone }}" class="support-link">{{ $kontak->phone }}</a></p>
+                @else
+                    <p>Kontak belum tersedia.</p>
+                @endif
             </div>
         </div>
 
@@ -889,9 +917,6 @@
             <p>&copy; 2025 PT. Solusi Koneksi Anda. All rights reserved.</p>
         </div>
     </footer>
-
-
-
 </body>
 
 </html>

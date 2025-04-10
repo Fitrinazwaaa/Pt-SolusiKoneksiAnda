@@ -36,36 +36,6 @@ class SesiController extends Controller
         }
     }
 
-    public function register()
-    {
-        return view('register');
-    }
-    
-    public function registerPost(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ], [
-            'name.required' => 'Nama wajib diisi',
-            'email.required' => 'Email wajib diisi',
-            'email.unique' => 'Email sudah terdaftar',
-            'password.required' => 'Password wajib diisi',
-            'password.confirmed' => 'Konfirmasi password tidak cocok',
-        ]);
-    
-        // Buat user baru dengan role default "user"
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user', // ← role otomatis 'user'
-        ]);
-    
-        return redirect('/')->with('success', 'Akun berhasil dibuat, silakan login!');
-    }
-
     function logout()
     {
         Auth::logout();

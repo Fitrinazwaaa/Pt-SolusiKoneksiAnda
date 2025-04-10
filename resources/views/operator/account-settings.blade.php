@@ -98,7 +98,7 @@
         }
 
         .navbar-dashboard {
-            background-color: #fff;
+            background-color: #0f172a;
             border-radius: 12px;
             padding: 10px 20px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -116,10 +116,71 @@
             }
         }
     </style>
+    <style>
+      /* Konten modern style */
+.content-card {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 30px;
+    color: #f1f5f9;
+    box-shadow: 0 0 10px rgba(15, 23, 42, 0.2);
+    margin-bottom: 30px;
+}
+
+.content-card h4,
+.content-card h5 {
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.content-card label {
+    color: #cbd5e1;
+}
+
+.content-card .form-control {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    color: #f8fafc;
+}
+
+.content-card .form-control:focus {
+    background-color: #0f172a;
+    border-color: #3b82f6;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-warning {
+    background-color: #facc15;
+    border: none;
+    color: #0f172a;
+    font-weight: 500;
+}
+
+.btn-warning:hover {
+    background-color: #eab308;
+    color: #0f172a;
+}
+
+.alert {
+    border-radius: 8px;
+    padding: 15px;
+}
+
+    </style>
 </head>
 
 <body>
-
     <div class="sidebar">
         <h4><i class="bi bi-speedometer2"></i> Admin Panel</h4>
 
@@ -139,7 +200,6 @@
                     <a class="nav-link" href="{{ route('akun.index') }}">
                         <i class="bi bi-people"></i> Akun
                     </a>
-
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#articleMenu" role="button">
@@ -191,6 +251,7 @@
             </ul>
         </div>
 
+
         <a href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout-link">
             <i class="bi bi-box-arrow-right"></i> Logout
@@ -201,129 +262,68 @@
     </div>
 
     <div class="main-content">
-      <!-- Navbar Dashboard -->
-      <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
-          <span class="fw-semibold fs-4 text-dark">Dashboard Admin</span>
-          <div class="d-flex align-items-center">
-              <i class="bi bi-person-circle fs-3 text-primary me-2"></i>
-              <span class="fw-semibold text-dark">Admin</span>
-          </div>
-      </nav>
-  
-      <!-- Statistik Cards -->
-      <div class="row g-4 mb-4">
-          <div class="col-md-4">
-              <div class="card border-0 shadow rounded-4">
-                  <div class="card-body d-flex align-items-center">
-                      <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                          <i class="bi bi-journal-text fs-3 text-primary"></i>
-                      </div>
-                      <div>
-                          <h6 class="text-muted mb-1">Total Artikel</h6>
-                          <h4 class="fw-bold">{{ $totalArticles ?? 0 }}</h4>
-                      </div>
-                  </div>
-              </div>
-          </div>
-  
-          @foreach ($modules as $module)
-              <div class="col-md-4">
-                  <div class="card border-0 shadow rounded-4">
-                      <div class="card-body d-flex align-items-center">
-                          <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
-                              <i class="bi bi-box-seam fs-3 text-info"></i>
-                          </div>
-                          <div>
-                              <h6 class="text-muted mb-1">{{ $module->name }}</h6>
-                              <h4 class="fw-bold">{{ $module->objects_count }}</h4>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          @endforeach
-      </div>
-  
-      <!-- Row bawah -->
-      <div class="row g-4 mb-4">
-          <!-- To-Do List -->
-          <div class="col-md-6">
-              <div class="card border-0 shadow rounded-4">
-                  <div class="card-body">
-                      <h6 class="fw-bold mb-3"><i class="bi bi-list-check me-2"></i>To-Do Hari Ini</h6>
-                      <ul class="list-group list-group-flush">
-                          <li class="list-group-item d-flex justify-content-between">
-                              Review artikel terbaru <span class="badge bg-primary">Penting</span>
-                          </li>
-                          <li class="list-group-item d-flex justify-content-between">
-                              Upload gambar produk <span class="badge bg-warning text-dark">Sedang</span>
-                          </li>
-                          <li class="list-group-item d-flex justify-content-between">
-                              Perbarui kontak perusahaan <span class="badge bg-success">Selesai</span>
-                          </li>
+        <!-- Navbar Dashboard -->
+        <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
+            <span class="fw-semibold fs-5 text-white">Setting Profile Perusahaan</span>
+            <div class="d-flex align-items-center">
+                <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
+                <span class="fw-semibold text-white">Admin</span>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+          <div class="content-card">
+              <h4>Pengaturan Akun</h4>
+      
+              @if (session('success'))
+                  <div class="alert alert-success">{{ session('success') }}</div>
+              @endif
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul class="mb-0">
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
                       </ul>
                   </div>
-              </div>
-          </div>
-  
-          <!-- Motivational Quote -->
-          <div class="col-md-6">
-              <div class="card bg-light border-0 shadow rounded-4">
-                  <div class="card-body">
-                      <blockquote class="blockquote">
-                          <p>"Kualitas bukanlah sebuah tindakan, tapi kebiasaan."</p>
-                          <footer class="blockquote-footer mt-2">Aristoteles</footer>
-                      </blockquote>
+              @endif
+      
+              <form action="{{ route('akun.update') }}" method="POST" class="mb-4">
+                  @csrf
+                  <div class="mb-3">
+                      <label>Nama</label>
+                      <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
                   </div>
-              </div>
+                  <div class="mb-3">
+                      <label>Email</label>
+                      <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
+                  </div>
+                  <button class="btn btn-primary">Simpan Perubahan</button>
+              </form>
+      
+              <hr class="my-4" style="border-color: #334155;">
+      
+              <h5>Ubah Password</h5>
+              <form action="{{ route('akun.updatePassword') }}" method="POST">
+                  @csrf
+                  <div class="mb-3">
+                      <label>Password Lama</label>
+                      <input type="password" name="current_password" class="form-control" required>
+                  </div>
+                  <div class="mb-3">
+                      <label>Password Baru</label>
+                      <input type="password" name="new_password" class="form-control" required>
+                  </div>
+                  <div class="mb-3">
+                      <label>Konfirmasi Password Baru</label>
+                      <input type="password" name="new_password_confirmation" class="form-control" required>
+                  </div>
+                  <button class="btn btn-warning">Ubah Password</button>
+              </form>
           </div>
       </div>
-  
-      <!-- Progress & Version Info -->
-      <div class="row g-4 mb-4">
-          <div class="col-md-6">
-              <div class="card border-0 shadow rounded-4">
-                  <div class="card-body">
-                      <h6 class="fw-bold mb-3"><i class="bi bi-bar-chart-line me-2"></i>Progress Upload Konten</h6>
-                      <p class="mb-1">Artikel</p>
-                      <div class="progress mb-3" style="height: 8px;">
-                          <div class="progress-bar bg-primary" style="width: 75%"></div>
-                      </div>
-                      <p class="mb-1">Produk</p>
-                      <div class="progress mb-3" style="height: 8px;">
-                          <div class="progress-bar bg-success" style="width: 60%"></div>
-                      </div>
-                      <p class="mb-1">Galeri</p>
-                      <div class="progress" style="height: 8px;">
-                          <div class="progress-bar bg-warning" style="width: 40%"></div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-  
-          <div class="col-md-6">
-              <div class="card border-0 shadow rounded-4 border-start border-4 border-primary">
-                  <div class="card-body">
-                      <h6 class="fw-bold"><i class="bi bi-terminal me-2"></i>Versi Sistem</h6>
-                      <p class="mb-1">v1.2.3 - Diperbarui 01 April 2025</p>
-                      <small class="text-muted">Cek changelog di halaman pengaturan sistem.</small>
-                  </div>
-              </div>
-          </div>
-      </div>
-  
-      <!-- Alert Info -->
-      <div class="row">
-          <div class="col-md-12">
-              <div class="alert alert-info d-flex align-items-center shadow-sm" role="alert">
-                  <i class="bi bi-info-circle me-3 fs-4"></i>
-                  <div>
-                      Selamat datang di Dashboard Admin! Pastikan semua konten website telah diperbarui sebelum akhir bulan ini.
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  
+      
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -19,18 +19,34 @@
         {{-- Sidebar List Object --}}
         <div style="flex: 1;">
             <h4 style="font-size: 18px; margin-bottom: 10px; color: #0f172a;">{{ $module->name }}</h4>
-            <ul id="object-list" style="list-style: none; padding-left: 0;">
+            <ul id="object-list" style="display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0;">
                 @foreach ($module->objects as $object)
-                    <li style="margin-bottom: 6px;">
-                        <a href="javascript:void(0);" 
-                           class="object-link" 
-                           data-id="{{ $object->id }}" 
-                           style="color: #3b82f6;">
+                    <li style="list-style: none;">
+                        <a href="javascript:void(0);"
+                           class="object-link"
+                           data-id="{{ $object->id }}"
+                           style="
+                                display: block;
+                                padding: 14px 18px;
+                                background-color: #f8fafc;
+                                border: 1px solid #e2e8f0;
+                                border-radius: 12px;
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+                                color: #1e293b;
+                                font-size: 15px;
+                                font-weight: 500;
+                                text-decoration: none;
+                                transition: all 0.3s ease-in-out;
+                           "
+                           onmouseover="this.style.backgroundColor='#e0f2fe'; this.style.borderColor='#38bdf8'; this.style.color='#0284c7';"
+                           onmouseout="this.style.backgroundColor='#f8fafc'; this.style.borderColor='#e2e8f0'; this.style.color='#1e293b';"
+                        >
                             {{ $object->object_name }}
                         </a>
                     </li>
                 @endforeach
             </ul>
+            
         </div>
 
         {{-- Konten Detail --}}
