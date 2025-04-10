@@ -10,6 +10,7 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SettingKontakController;
 use App\Http\Controllers\SettingMedsosController;
 use App\Http\Controllers\SettingProfileController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,4 +55,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/akun', [AccountController::class, 'index'])->name('akun.index');
     Route::post('/akun/update', [AccountController::class, 'update'])->name('akun.update');
     Route::post('/akun/password', [AccountController::class, 'updatePassword'])->name('akun.updatePassword');
+
+// Route resource lengkap dengan nama untuk masing-masing aksi
+Route::resource('tags', TagController::class)->names([
+    'index'   => 'tags.index',
+    'create'  => 'tags.create',
+    'store'   => 'tags.store',
+    'edit'    => 'tags.edit',
+    'update'  => 'tags.update',
+    'destroy' => 'tags.destroy',
+]);
+
 });

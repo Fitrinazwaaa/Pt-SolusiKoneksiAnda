@@ -187,7 +187,7 @@
                     </a>
                     <div class="collapse" id="articleMenu">
                         <ul class="nav flex-column">
-                            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-tag"></i> Tag</a>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('tags.index') }}"><i class="bi bi-tag"></i> Tag</a>
                             </li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('article') }}"><i class="bi bi-file-text"></i>
                                     Article</a></li>
@@ -318,40 +318,85 @@
                                         <form action="{{ route('articles.update', $article->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
-                                        
-                                            <input type="text" name="post_name" class="form-control" value="{{ $article->post_name }}" required>
-                                            <input type="text" name="title" class="form-control" value="{{ $article->title }}" required>
-                                            <textarea name="content" class="form-control">{{ $article->content }}</textarea>
-                                        
-                                            <input type="text" name="meta_keyword" class="form-control" value="{{ $article->meta_keyword }}">
-                                            <textarea name="meta_description" class="form-control">{{ $article->meta_description }}</textarea>
-                                        
-                                            <input type="file" name="title_image" class="form-control">
-                                            @if($article->title_image)
-                                                <img src="{{ asset('storage/' . $article->title_image) }}" width="100" class="mt-2">
-                                            @endif
-                                        
-                                            <select name="status" class="form-select">
-                                                <option value="publish" {{ $article->status == 'publish' ? 'selected' : '' }}>Publish</option>
-                                                <option value="draft" {{ $article->status == 'draft' ? 'selected' : '' }}>Draft</option>
-                                            </select>
-                                        
-                                            <div class="mt-2">
-                                                @foreach (['travel', 'project', 'technology', 'life style', 'design'] as $tag)
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="tags" value="{{ $tag }}"
-                                                            {{ $article->tags == $tag ? 'checked' : '' }}>
-                                                        <label class="form-check-label">{{ ucfirst($tag) }}</label>
-                                                    </div>
-                                                @endforeach
+                            
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editArticleModalLabel{{ $article->id }}">Edit Artikel</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                             </div>
-                                        
-                                            <button type="submit" class="btn btn-success mt-3">Update Artikel</button>
+                            
+                                            <div class="modal-body">
+                                                {{-- Post Name --}}
+                                                <div class="mb-3">
+                                                    <label for="post_name_{{ $article->id }}" class="form-label">Post Name</label>
+                                                    <input type="text" name="post_name" id="post_name_{{ $article->id }}" class="form-control" value="{{ $article->post_name }}" required>
+                                                </div>
+                            
+                                                {{-- Title --}}
+                                                <div class="mb-3">
+                                                    <label for="title_{{ $article->id }}" class="form-label">Judul</label>
+                                                    <input type="text" name="title" id="title_{{ $article->id }}" class="form-control" value="{{ $article->title }}" required>
+                                                </div>
+                            
+                                                {{-- Content --}}
+                                                <div class="mb-3">
+                                                    <label for="content_{{ $article->id }}" class="form-label">Konten</label>
+                                                    <textarea name="content" id="content_{{ $article->id }}" class="form-control" rows="4">{{ $article->content }}</textarea>
+                                                </div>
+                            
+                                                {{-- Meta Keyword --}}
+                                                <div class="mb-3">
+                                                    <label for="meta_keyword_{{ $article->id }}" class="form-label">Meta Keyword</label>
+                                                    <input type="text" name="meta_keyword" id="meta_keyword_{{ $article->id }}" class="form-control" value="{{ $article->meta_keyword }}">
+                                                </div>
+                            
+                                                {{-- Meta Description --}}
+                                                <div class="mb-3">
+                                                    <label for="meta_description_{{ $article->id }}" class="form-label">Meta Description</label>
+                                                    <textarea name="meta_description" id="meta_description_{{ $article->id }}" class="form-control" rows="3">{{ $article->meta_description }}</textarea>
+                                                </div>
+                            
+                                                {{-- Gambar --}}
+                                                <div class="mb-3">
+                                                    <label for="title_image_{{ $article->id }}" class="form-label">Gambar Utama</label>
+                                                    <input type="file" name="title_image" id="title_image_{{ $article->id }}" class="form-control">
+                                                    @if ($article->title_image)
+                                                        <img src="{{ asset('storage/' . $article->title_image) }}" width="100" class="mt-2 rounded shadow-sm">
+                                                    @endif
+                                                </div>
+                            
+                                                {{-- Status --}}
+                                                <div class="mb-3">
+                                                    <label for="status_{{ $article->id }}" class="form-label">Status</label>
+                                                    <select name="status" id="status_{{ $article->id }}" class="form-select">
+                                                        <option value="publish" {{ $article->status == 'publish' ? 'selected' : '' }}>Publish</option>
+                                                        <option value="draft" {{ $article->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                                                    </select>
+                                                </div>
+                            
+                                                {{-- Tags --}}
+                                                <div class="mb-3">
+                                                    <label class="form-label d-block">Tag</label>
+                                                    @foreach ($tags as $tag)
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="tags" value="{{ $tag->name }}"
+                                                                {{ $article->tags == $tag->name ? 'checked' : '' }} id="tag_edit_{{ $article->id }}_{{ $tag->id }}">
+                                                            <label class="form-check-label" for="tag_edit_{{ $article->id }}_{{ $tag->id }}">
+                                                                {{ ucfirst($tag->name) }}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                            
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-success">Update Artikel</button>
+                                            </div>
                                         </form>
-                                        
                                     </div>
                                 </div>
                             </div>
+                            
                 
                         @empty
                             <tr>
@@ -415,13 +460,10 @@
 
                     <div class="mb-3">
                         <label class="form-label d-block">Tags</label>
-                        @php
-                            $tags = ['travel', 'project', 'technology', 'life style', 'design'];
-                        @endphp
                         @foreach ($tags as $tag)
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tags" id="tag-{{ $tag }}" value="{{ $tag }}">
-                                <label class="form-check-label" for="tag-{{ $tag }}">{{ ucfirst($tag) }}</label>
+                                <input class="form-check-input" type="radio" name="tags" id="tag-{{ $tag->id }}" value="{{ $tag->name }}">
+                                <label class="form-check-label" for="tag-{{ $tag->id }}">{{ ucfirst($tag->name) }}</label>
                             </div>
                         @endforeach
                     </div>

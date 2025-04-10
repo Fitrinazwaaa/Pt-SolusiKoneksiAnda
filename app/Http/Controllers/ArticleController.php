@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,8 +12,9 @@ class ArticleController extends Controller
 {
     public function index()
     {
+        $tags = Tag::all(); // ambil semua tag dari tabel
         $articles = Article::latest()->paginate(10);
-        return view('operator.article', compact('articles'));
+        return view('operator.article', compact('articles', 'tags'));
     }
 
     public function store(Request $request)

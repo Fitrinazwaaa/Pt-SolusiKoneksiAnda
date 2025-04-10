@@ -143,7 +143,7 @@
         </a>
         <div class="collapse" id="articleMenu">
           <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-tag"></i> Tag</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('tags.index') }}"><i class="bi bi-tag"></i> Tag</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('article') }}"><i class="bi bi-file-text"></i> Article</a></li>
           </ul>
         </div>

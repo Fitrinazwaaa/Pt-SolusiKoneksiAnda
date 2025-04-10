@@ -198,7 +198,7 @@
 <div class="main-content">
   <!-- Navbar Dashboard -->
   <nav class="navbar navbar-dashboard d-flex justify-content-between align-items-center mb-4">
-    <span class="fw-semibold fs-5 text-dark">Setting Media Sosial</span>
+    <span class="fw-semibold fs-5 text-dark">Setting Profile Perusahaan</span>
     <div class="d-flex align-items-center">
       <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
       <span class="fw-semibold text-dark">Admin</span>
@@ -206,39 +206,107 @@
   </nav>
 
 {{-- CONTENT DISINI --}}
-<div class="card shadow p-4 bg-white rounded">
-  <form action="{{ route('medsos.update') }}" method="POST">
-    @csrf
+<div class="container">
+    <h2>Daftar Tags</h2>
 
-    <div class="mb-3">
-      <label class="form-label">Facebook</label>
-      <input type="url" name="facebook" class="form-control" value="{{ old('facebook', $setting->facebook ?? '') }}">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">YouTube</label>
-      <input type="url" name="youtube" class="form-control" value="{{ old('youtube', $setting->youtube ?? '') }}">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Instagram</label>
-      <input type="url" name="instagram" class="form-control" value="{{ old('instagram', $setting->instagram ?? '') }}">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">X (Twitter)</label>
-      <input type="url" name="x" class="form-control" value="{{ old('x', $setting->x ?? '') }}">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">LinkedIn</label>
-      <input type="url" name="linkedin" class="form-control" value="{{ old('linkedin', $setting->linkedin ?? '') }}">
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-      <i class="bi bi-save me-1"></i> Simpan Media Sosial
+    {{-- Button Tambah Tag --}}
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addTagModal">
+        Tambah Tag
     </button>
-  </form>
+
+    {{-- Alert --}}
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if($errors->any())
+        <div class="alert alert-danger">{{ $errors->first() }}</div>
+    @endif
+
+    {{-- Tabel Tags --}}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Tag</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($tags as $index => $tag)
+            <tr>
+                <td>{{ $tags->firstItem() + $index }}</td>
+                <td>{{ $tag->name }}</td>
+                <td>
+                    {{-- Tombol Edit --}}
+                    <button class="btn btn-warning btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editTagModal{{ $tag->id }}">
+                        Edit
+                    </button>
+
+                    {{-- Form Hapus --}}
+                    <form action="{{ route('tags.destroy', $tag->id) }}" method="POST" style="display:inline-block;">
+                        @csrf @method('DELETE')
+                        <button onclick="return confirm('Hapus tag ini?')" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+
+            {{-- Modal Edit Tag --}}
+            <div class="modal fade" id="editTagModal{{ $tag->id }}" tabindex="-1" aria-labelledby="editTagModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form action="{{ route('tags.update', $tag->id) }}" method="POST">
+                        @csrf @method('PUT')
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Tag</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label>Nama Tag</label>
+                                    <input type="text" name="name" class="form-control" value="{{ $tag->name }}" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success">Update</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @endforeach
+        </tbody>
+    </table>
+
+    {{-- Pagination --}}
+    {{ $tags->links('pagination::bootstrap-5') }}
+</div>
+
+{{-- Modal Tambah Tag --}}
+<div class="modal fade" id="addTagModal" tabindex="-1" aria-labelledby="addTagModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('tags.store') }}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Tag</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Nama Tag</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 </div>
 
